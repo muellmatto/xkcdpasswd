@@ -13,14 +13,21 @@
                 margin: auto;
                 padding: 0.5rem;
             }
+            #button, #pw {
+                font-weight: 600;
+                font-size: 1.2rem;
+            }
             #button {
                 background: lightgreen;
-                padding: 0.4rem;
+                padding: 0.9rem;
                 border-radius: 0rem;
                 box-sizing: border-box;
                 display: inline-block;
                 box-shadow: 0.4rem 0.4rem black;
                 transition: box-shadow 0.1s margin 0.1s;
+                -webkit-user-select: none;  /* Chrome all / Safari all */
+                -moz-user-select: none;     /* Firefox all */
+                -ms-user-select: none;      /* IE 10+ */
                 user-select: none;
             }
             #button:active {
@@ -29,7 +36,9 @@
                 margin-left: 0.4rem; 
             }
             #pw {
-                padding: 0.5rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                padding: 0.9rem;
                 border-width: 0.2rem;
                 border-style: dashed;
                 display: inline-block;
@@ -47,7 +56,7 @@
         </style>
     </head>
     <body>
-        <h3 id="pw"></h2>
+        <div id="pw"></div>
         <br>
         <div id="button">GENERATE PASSWORD</div>
         <footer>
