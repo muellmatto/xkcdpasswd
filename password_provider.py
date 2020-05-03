@@ -36,7 +36,7 @@ def home():
 if __name__ == "__main__":
     # app.config['TEMPLATES_AUTO_RELOAD'] = True
     # debug does autoreloading of everything
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
 
 
 
