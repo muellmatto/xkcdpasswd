@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>XKCDSTYLE PASSWORDS</title>
+        <style>
+            * {
+                font-family: monospace;
+            }
+            body {
+                max-width: 40rem;
+                margin: auto;
+                padding: 0.5rem;
+            }
+            #button {
+                background: lightgreen;
+                padding: 0.4rem;
+                border-radius: 0rem;
+                box-sizing: border-box;
+                display: inline-block;
+                box-shadow: 0.4rem 0.4rem black;
+                transition: box-shadow 0.1s margin 0.1s;
+                user-select: none;
+            }
+            #button:active {
+                box-shadow: 0rem 0rem black;
+                margin-top: 0.4rem;
+                margin-left: 0.4rem; 
+            }
+            #pw {
+                padding: 0.5rem;
+                border-width: 0.2rem;
+                border-style: dashed;
+                display: inline-block;
+            }
+            footer {
+                color: lightgrey;
+                position: fixed;
+                bottom: 0.5rem;
+            }
+            footer>a{
+                color: lightgrey;
+                text-decoration: none;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h3 id="pw"></h2>
+        <br>
+        <div id="button">GENERATE PASSWORD</div>
+        <footer>
+            Made with
+            <a rel="noopener" target="_blank" href="https://palletsprojects.com/p/flask/">FLASK</a>,
+            <a rel="noopener" target="_blank" href="https://github.com/redacted/XKCD-password-generator">XKCDPASS</a>
+            and   ☕.
+        </footer>
+        <script>
+            let pw = document.querySelector("#pw");
+            let button = document.querySelector("#button");
+            function newPassword(){
+                fetch('/rest/password')
+                    .then(
+                        function(res) {
+                            return res.json()
+                        }
+                    )
+                    .then(
+                        function(data) {
+                            pw.innerText = data;
+                        }
+                    )
+            }
+            window.onload = function () {
+                newPassword();
+                button.onclick = newPassword;
+            }
+        </script>
+    </body>
+</html>
