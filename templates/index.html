@@ -13,7 +13,13 @@
                 margin: auto;
                 padding: 0.5rem;
             }
-            #button, #pw {
+	    main {
+                display: grid;
+		grid-template-rows: auto auto auto;
+		gap: 1rem;
+		justify-items: start;
+	    }
+            #button, #pw, #easy_mode + label {
                 font-weight: 600;
                 font-size: 1.2rem;
             }
@@ -29,11 +35,13 @@
                 -moz-user-select: none;     /* Firefox all */
                 -ms-user-select: none;      /* IE 10+ */
                 user-select: none;
+		margin-bottom: 1rem;
             }
             #button:active {
                 box-shadow: 0rem 0rem black;
                 margin-top: 0.4rem;
                 margin-left: 0.4rem; 
+		margin-bottom: 0.6rem;
             }
             #pw {
                 margin-top: 1rem;
@@ -43,6 +51,41 @@
                 border-style: dashed;
                 display: inline-block;
             }
+	    #easy_mode {
+                display: none;
+	    }
+	    #easy_mode + label {
+                position: relative;
+		padding-left: 5rem;
+		padding-top: 1.5rem; 
+	    }
+	    #easy_mode + label::before {
+                width: 2rem;
+		height: 2rem;
+		background: lightgreen;
+		border: black;
+		border-width: 0.5rem;
+		border-style: solid;
+		border-color: black;
+		display: block;
+		position: absolute;
+		top: 0.2rem;
+		left: 0.2rem;
+		content: " ";
+		margin-top: 0.5rem;
+	    }
+	    #easy_mode:checked + label::before {
+		content: " ";
+	    }
+	    #easy_mode:checked + label::after {
+		content: " ";
+		position: absolute;
+		top: 1.7rem;
+		left: 1.2rem;
+		width: 1rem;
+		height: 1rem;
+		background: black;
+	    }
             footer {
                 color: lightgrey;
                 position: fixed;
@@ -56,9 +99,12 @@
         </style>
     </head>
     <body>
-        <div id="pw"></div>
-        <br>
-        <div id="button">GENERATE PASSWORD</div>
+        <main>
+            <div id="pw"></div>
+            <div id="button">GENERATE PASSWORD</div>
+	    <input id=easy_mode type=checkbox></input>
+	    <label for=easy_mode>EASY MODE</input>
+        </main>
         <footer>
             Made with
             <a rel="noopener" target="_blank" href="https://palletsprojects.com/p/flask/">FLASK</a>,
@@ -68,8 +114,15 @@
         <script>
             let pw = document.querySelector("#pw");
             let button = document.querySelector("#button");
+            let easy_mode = document.querySelector("#easy_mode");
+            var url;
             function newPassword(){
-                fetch('/rest/password')
+                if (easy_mode.checked) {
+                    url = "/rest/password?easy_mode=true";
+                } else {
+                    url = "/rest/password";
+                }
+                fetch(url)
                     .then(
                         function(res) {
                             return res.json()
@@ -77,6 +130,7 @@
                     )
                     .then(
                         function(data) {
+                            console.log(data);
                             pw.innerText = data;
                         }
                     )
