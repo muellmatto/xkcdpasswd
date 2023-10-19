@@ -1,6 +1,4 @@
-from random import sample
-
-wordlist = [
+var wordlist_easy = [
     "Eisvogel",
     "Ameisenbaer",
     "Anemonenfisch",
@@ -120,8 +118,5 @@ wordlist = [
     "Zwergsaeger",
     "Zwergseidenaeffchen",
     "Zwergziege"
-    ]
+];
 
-def generate_password(length=2):
-    words = sample(wordlist, length)
-    return " ".join(words)

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <title>XKCDSTYLE PASSWORDS</title>
+        <link rel="stylesheet" href="static/xkcdpasswd.css">
+    </head>
+    <body>
+        <main>
+            <div id="pw"></div>
+            <div id="button">GENERATE PASSWORD</div>
+	    <input id=easy_mode type=checkbox></input>
+	    <label for=easy_mode>EASY MODE</input>
+        </main>
+        <footer>
+            Made with
+            <a rel="noopener" target="_blank" href="https://xkcd.com/936/">XKCD</a>
+            and   ☕.
+        </footer>
+        <script src="static/easy.js"></script>
+        <script src="static/ger.js"></script>
+        <script>
+            let pw = document.querySelector("#pw");
+            let button = document.querySelector("#button");
+            let easy_mode = document.querySelector("#easy_mode");
+			var wordlist;
+            var num_words;
+            var words;
+
+            function fisherYates( array ){
+                var count = array.length,
+                    randomnumber,
+                    temp;
+                while( count ){
+                    randomnumber = Math.random() * count-- | 0;
+                    temp = array[count];
+                    array[count] = array[randomnumber];
+                    array[randomnumber] = temp
+                }
+            }
+
+            function newPassword(){
+                if (easy_mode.checked) {
+                    wordlist = wordlist_easy;
+                    num_words = 2;
+                } else {
+                    wordlist = wordlist_ger;
+                    num_words = 4;
+                }
+                fisherYates(wordlist);
+                words = wordlist.slice(0, num_words);
+                pw.innerText = words.join(" ");
+            }
+            window.onload = function () {
+                newPassword();
+                button.onclick = newPassword;
+            }
+        </script>
+    </body>
+</html>
